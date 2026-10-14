@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust Axum Music Streamer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .player-card {
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        button {
+            background-color: #1db954;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        button:hover {
+            background-color: #1ed760;
+        }
+        p {
+            color: #b3b3b3;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="player-card">
+        <h2>Axum Audio Streamer</h2>
+        <p>Click play to stream audio live from the Rust backend.</p>
+
+        <!-- Single Play Button -->
+        <button id="playBtn">Play Stream</button>
+
+        <!-- Hidden HTML5 audio element connected to backend stream -->
+        <audio id="audioStream" preload="none">
+            <source src="/stream" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <script>
+        const playBtn = document.getElementById('playBtn');
+        const audioElement = document.getElementById('audioStream');
+
+        playBtn.addEventListener('click', () => {
+            if (audioElement.paused) {
+                audioElement.play()
+                    .then(() => {
+                        playBtn.textContent = "Pause Stream";
+                    })
+                    .catch(error => {
+                        console.error("Playback failed:", error);
+                    });
+            } else {
+                audioElement.pause();
+                playBtn.textContent = "Play Stream";
+            }
+        });
+
+        // Reset button text if audio ends naturally
+        audioElement.addEventListener('ended', () => {
+            playBtn.textContent = "Play Stream";
+        });
+    </script>
+
+</body>
+</html>

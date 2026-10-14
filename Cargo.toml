@@ -1,0 +1,17 @@
+[package]
+name = "axum_stream_app"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "musicstreamingserver"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+tokio-util = { version = "0.7", features = ["full"] }
+tower-http = { version = "0.7.1", features = ["full"] }
+hyper = { version = "1.12.0", features = ["full"] }
+hyper-util = "0.1.21"
+axum = "0.8.9"
